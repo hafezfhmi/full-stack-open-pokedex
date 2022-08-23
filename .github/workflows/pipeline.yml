@@ -33,4 +33,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'fullstackopen-part11-deploy'
           heroku_email: 'hafezfahmigame01@gmail.com'
-          healthcheck: 'https://fullstackopen-part11-deploy.herokuapp.com/'
+          healthcheck: 'https://fullstackopen-part112-deploy.herokuapp.com/'
+          rollbackonhealthcheckfailed: true
