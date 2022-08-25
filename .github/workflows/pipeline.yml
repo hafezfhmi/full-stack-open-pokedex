@@ -39,3 +39,13 @@ jobs:
           heroku_email: 'hafezfahmigame01@gmail.com'
           healthcheck: 'https://fullstackopen-part11-deploy.herokuapp.com/'
           rollbackonhealthcheckfailed: true
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+       - if: ${{ github.event_name == 'push' }}
+        name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: true
