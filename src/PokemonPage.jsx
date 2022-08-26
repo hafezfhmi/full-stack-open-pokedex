@@ -29,7 +29,7 @@ const PokemonPage = ({ previous, next }) => {
   console.log('hiddenAbility=', hiddenAbility)
   return (
     <>
-      <div className="links" style={{ backgroundColor: 'blue' }}>
+      <div className="links" style={{ backgroundColor: 'red' }}>
         {previous && <Link to={`/pokemon/${previous.name}`}>Previous</Link>}
         <Link to="/">Home</Link>
         {next && <Link to={`/pokemon/${next.name}`}>Next</Link>}
