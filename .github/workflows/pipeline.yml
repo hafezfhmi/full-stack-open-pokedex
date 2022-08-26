@@ -68,3 +68,5 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ contains(join(toJson(github.event.commits.*.message)), '#test') }}
         run: echo "$COMMIT_MESSAGES"
+      - if: ${{ contains(join(toJson(github.event.commits.*.message)), '#test') == true}}
+        run: echo 'This is a test'
