@@ -31,7 +31,7 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: Run deployment
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && !contains(joins(github.event.commits.*.message), '#skip')}}
         uses: akhileshns/heroku-deploy@v3.12.12
         with: 
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -40,9 +40,8 @@ jobs:
           healthcheck: 'https://fullstackopen-part11-deploy.herokuapp.com/'
           rollbackonhealthcheckfailed: true
   tag_release:
-    name: Bump version and push tag
     needs: [simple_deployment_pipeline]
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && !contains(joins(github.event.commits.*.message), '#skip') }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
