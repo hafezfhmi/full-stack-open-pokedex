@@ -39,6 +39,23 @@ jobs:
           heroku_email: 'hafezfahmigame01@gmail.com'
           healthcheck: 'https://fullstackopen-part11-deploy.herokuapp.com/'
           rollbackonhealthcheckfailed: true
+      - name: The job has succeeded (Discord notification)
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          text: A new version of Pokedex deployed
+          description: to https://fullstackopen-part11-deploy.herokuapp.com/ by ${{github.event.commits.committer.username}}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: The job has failed (Discord notification)
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error 
+          text: Build failed
+          description: commit ${{github.event.commits.url}} by ${{github.event.commits.committer.username}} broke the build
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        
   tag_release:
     needs: [simple_deployment_pipeline]
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip') }}
