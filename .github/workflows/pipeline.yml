@@ -45,7 +45,7 @@ jobs:
         with:
           severity: info
           text: A new version of Pokedex deployed
-          description: to https://fullstackopen-part11-deploy.herokuapp.com/ by ${{ toJSON(github.event.commits.committer.username) }}
+          description: to https://fullstackopen-part11-deploy.herokuapp.com/ by ${{ github.event.commits.*.committer.username }}
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: The job has failed (Discord notification)
         if: ${{ failure() }}
@@ -53,7 +53,7 @@ jobs:
         with:
           severity: error 
           text: Build failed
-          description: commit ${{github.event.commits.url}} by ${{github.event.commits.committer.username}} broke the build
+          description: commit ${{ github.event.commits.*.url }} by ${{ github.event.commits.*.committer.username }} broke the build
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
         
   tag_release:
